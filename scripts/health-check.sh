@@ -6,7 +6,7 @@ RETRY_INTERVAL=10
 echo "Checking health of services..."
 
 for i in $(seq 1 $MAX_RETRIES); do
-    if curl -f -s http://localhost:8081/actuator/health > /dev/null 2>&1; then
+    if curl -f -s http://api-server:8081/actuator/health > /dev/null 2>&1; then
         echo "API server is healthy"
         exit 0
     fi
