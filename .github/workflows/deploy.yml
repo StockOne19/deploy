@@ -47,5 +47,5 @@ jobs:
             --command="
               cd ~/deployment/${{ env.SERVICE_DIR }} &&
               chmod +x deploy.sh health-check.sh &&
-              ./deploy.sh ${{ env.SERVICE_DIR }}
+              sudo ./deploy.sh ${{ env.SERVICE_DIR }}
             "

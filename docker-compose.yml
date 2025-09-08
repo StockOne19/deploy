@@ -2,15 +2,11 @@ version: '3.8'
 
 services:
   api-server:
-    image: ghcr.io/Stockone19/server-app:latest
+    image: ${IMAGE_NAME:-ghcr.io/stockone19/server-app:latest}
+    container_name: api-server
     ports:
-      - "8081:8081"
+      - "8080:8080"
     restart: unless-stopped
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8081/actuator/health"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
 
   # worker-server:
   #   image: ghcr.io/your-org/investment-backend-worker:latest
@@ -27,11 +23,13 @@ services:
 
   nginx:
     image: nginx:alpine
+    container_name: nginx
     ports:
       - "80:80"
+      - "443:443"
     volumes:
-      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx.conf:/etc/nginx/nginx.conf
     depends_on:
       - api-server
-      # - worker-server
+      # - web-app
     restart: unless-stopped
