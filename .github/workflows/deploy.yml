@@ -25,6 +25,11 @@ jobs:
       - name: Set up Cloud SDK
         uses: google-github-actions/setup-gcloud@v2
 
+      - name: Set service directory
+        run: |
+          SERVICE_NAME="${{ github.event.client_payload.service }}"
+          echo "SERVICE_DIR=${SERVICE_NAME}" >> $GITHUB_ENV
+
       - name: Copy files to GCP instance
         run: |
           gcloud compute scp \
@@ -33,14 +38,14 @@ jobs:
             nginx.conf \
             scripts/deploy.sh \
             scripts/health-check.sh \
-            ${{ env.GCP_INSTANCE_NAME }}:~/deployment/
+            ${{ env.GCP_INSTANCE_NAME }}:~/deployment/${{ env.SERVICE_DIR }}/
 
-      - name: Deploy to GCP instance
+      - name: Deploy specific service
         run: |
           gcloud compute ssh ${{ env.GCP_INSTANCE_NAME }} \
             --zone=${{ env.GCP_ZONE }} \
             --command="
-              cd ~/deployment && 
+              cd ~/deployment/${{ env.SERVICE_DIR }} &&
               chmod +x deploy.sh health-check.sh &&
-              ./deploy.sh
+              ./deploy.sh ${{ env.SERVICE_DIR }}
             "
