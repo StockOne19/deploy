@@ -8,7 +8,7 @@ RETRY_INTERVAL=10
 case "$SERVICE_NAME" in
     "api-server")
         PORT=8081
-        HEALTH_PATH="/actuator/health"
+        HEALTH_PATH="/health"
         ;;
     *)
         echo "Unknown service: $SERVICE_NAME"
