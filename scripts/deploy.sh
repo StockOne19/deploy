@@ -19,10 +19,13 @@ fi
 echo "Restarting services..."
 sudo docker-compose up -d
 
+echo "Restarting nginx to apply changes..."
+docker-compose restart nginx
+
 echo "Running health check for $SERVICE_NAME..."
 sleep 15
 
-if ./health-check.sh $SERVICE_NAME; then  # 👈 서비스명 전달
+if ./health-check.sh $SERVICE_NAME; then
     echo "Deployment successful for $SERVICE_NAME"
     sudo docker image prune -f
 else
