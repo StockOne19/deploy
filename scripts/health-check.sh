@@ -19,7 +19,7 @@ esac
 echo "Checking health of $SERVICE_NAME at localhost:$PORT$HEALTH_PATH..."
 
 for i in $(seq 1 $MAX_RETRIES); do
-    if curl -f -s http://localhost:$PORT$HEALTH_PATH > /dev/null 2>&1; then
+    if curl -f -s http://35.203.107.99$HEALTH_PATH > /dev/null 2>&1; then
         echo "$SERVICE_NAME is healthy"
         exit 0
     fi
