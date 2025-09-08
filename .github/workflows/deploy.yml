@@ -57,3 +57,13 @@ jobs:
               chmod +x deploy.sh health-check.sh &&
               sudo ./deploy.sh ${{ env.SERVICE_DIR }}
             "
+
+      - name: Copy files to accessible location
+        run: |
+          gcloud compute ssh ${{ env.GCP_INSTANCE_NAME }} \
+            --zone=${{ env.GCP_ZONE }} \
+            --command="
+              sudo cp ~/deployment/${{ env.SERVICE_DIR }}/* /tmp/ 2>/dev/null || true &&
+              sudo chmod 644 /tmp/*.yml /tmp/*.conf /tmp/*.sh 2>/dev/null || true &&
+              ls -la /tmp/ | grep -E '\.(yml|conf|sh)$'
+            "
