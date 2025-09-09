@@ -11,6 +11,8 @@ if [ -z "$SERVICE_NAME" ]; then
    exit 1
 fi
 
+docker-compose up -d redis-server
+
 if command -v docker &> /dev/null; then
    echo "Pulling latest image for $SERVICE_NAME..."
    sudo docker-compose pull $SERVICE_NAME
