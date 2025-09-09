@@ -19,7 +19,6 @@ fi
 echo "Restarting $SERVICE_NAME service..."
 sudo docker-compose up -d $SERVICE_NAME
 
-# nginx는 의존성이 있을 때만 재시작
 if [ "$SERVICE_NAME" == "api-server" ] || [ "$SERVICE_NAME" == "data-server" ]; then
    echo "Restarting nginx to apply changes..."
    sudo docker-compose restart nginx

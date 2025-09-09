@@ -7,9 +7,13 @@ RETRY_INTERVAL=10
 # 서비스별 포트 매핑
 case "$SERVICE_NAME" in
     "api-server")
-        PORT=8081
         HEALTH_PATH="/health"
         ;;
+
+    "data-server")
+        HEALTH_PATH="/health"
+        ;;
+
     *)
         echo "Unknown service: $SERVICE_NAME"
         exit 1
