@@ -25,5 +25,5 @@ services:
       - ./nginx.conf:/etc/nginx/nginx.conf
     depends_on:
       - api-server
-      # - web-app
+      - data-server
     restart: unless-stopped
