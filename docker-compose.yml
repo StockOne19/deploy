@@ -27,3 +27,9 @@ services:
       - api-server
       - data-server
     restart: unless-stopped
+
+  redis-server:
+    image: redis:7-alpine
+    container_name: redis-server
+    volumes:
+      - ./redis-data:/data
