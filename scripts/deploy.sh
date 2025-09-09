@@ -7,30 +7,33 @@ SERVICE_NAME=$1
 echo "Starting deployment..."
 
 if [ -z "$SERVICE_NAME" ]; then
-    echo "Usage: $0 <service-name>"
-    exit 1
+   echo "Usage: $0 <service-name>"
+   exit 1
 fi
 
 if command -v docker &> /dev/null; then
-    echo "Pulling latest images..."
-    sudo docker-compose pull
+   echo "Pulling latest image for $SERVICE_NAME..."
+   sudo docker-compose pull $SERVICE_NAME
 fi
 
-echo "Restarting services..."
-sudo docker-compose up -d
+echo "Restarting $SERVICE_NAME service..."
+sudo docker-compose up -d $SERVICE_NAME
 
-echo "Restarting nginx to apply changes..."
-docker-compose restart nginx
+# nginx는 의존성이 있을 때만 재시작
+if [ "$SERVICE_NAME" == "api-server" ] || [ "$SERVICE_NAME" == "data-server" ]; then
+   echo "Restarting nginx to apply changes..."
+   sudo docker-compose restart nginx
+fi
 
 echo "Running health check for $SERVICE_NAME..."
 sleep 15
 
 if ./health-check.sh $SERVICE_NAME; then
-    echo "Deployment successful for $SERVICE_NAME"
-    sudo docker image prune -f
+   echo "Deployment successful for $SERVICE_NAME"
+   sudo docker image prune -f
 else
-    echo "Deployment failed for $SERVICE_NAME"
-    exit 1
+   echo "Deployment failed for $SERVICE_NAME"
+   exit 1
 fi
 
 echo "Deployment completed for $SERVICE_NAME"
