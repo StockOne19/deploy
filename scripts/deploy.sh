@@ -21,8 +21,10 @@ sudo docker-compose up -d $SERVICE_NAME
 
 if [ "$SERVICE_NAME" == "api-server" ] || [ "$SERVICE_NAME" == "data-server" ]; then
    echo "Restarting nginx to apply changes..."
-   sudo docker-compose up -d --force-recreate nginx
+   sudo docker-compose up -d nginx
 fi
+
+sudo docker-compose up -d --force-recreate
 
 echo "Running health check for $SERVICE_NAME..."
 sleep 15
