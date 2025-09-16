@@ -3,14 +3,14 @@ version: '3.8'
 services:
   api-server:
     image: ${IMAGE_NAME:-ghcr.io/stockone19/server-app:latest}
-    container_name: api-server
+    # container_name: api-server
     ports:
       - "8081:8081"
     restart: unless-stopped
 
   data-server:
     image: ${IMAGE_NAME:-ghcr.io/stockone19/stock-app:latest}
-    container_name: data-server
+    # container_name: data-server
     ports:
       - "8000:8000"
     restart: unless-stopped
