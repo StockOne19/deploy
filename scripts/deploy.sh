@@ -11,18 +11,13 @@ if [ -z "$SERVICE_NAME" ]; then
    exit 1
 fi
 
-# if command -v docker &> /dev/null; then
-#    echo "Pulling latest image for $SERVICE_NAME..."
-#    sudo docker-compose pull $SERVICE_NAME
-# fi
-
-sudo docker-compose pull api-server data-server
-sudo docker-compose up -d --no-deps #api-server data-server
+if command -v docker &> /dev/null; then
+   echo "Pulling latest image for $SERVICE_NAME..."
+   sudo docker-compose pull api-server data-server
+fi
 
 echo "Restarting $SERVICE_NAME service..."
-# sudo docker-compose stop $SERVICE_NAME
-# sudo docker-compose rm -f $SERVICE_NAME
-# sudo docker-compose up -d $SERVICE_NAME
+sudo docker-compose up -d --no-deps api-server data-server
 
 # if [ "$SERVICE_NAME" == "api-server" ] || [ "$SERVICE_NAME" == "data-server" ]; then
 #    echo "Restarting nginx to apply changes..."
