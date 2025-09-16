@@ -16,8 +16,8 @@ fi
 #    sudo docker-compose pull $SERVICE_NAME
 # fi
 
-sudo docker-compose pull
-sudo docker-compose up -d --no-deps
+sudo docker-compose pull api-server data-server
+sudo docker-compose up -d --no-deps api-server data-server
 
 echo "Restarting $SERVICE_NAME service..."
 # sudo docker-compose stop $SERVICE_NAME
