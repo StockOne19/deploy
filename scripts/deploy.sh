@@ -26,11 +26,11 @@ sudo docker-compose stop $SERVICE_NAME
 sudo docker rm -f $SERVICE_NAME 2>/dev/null || true
 sudo docker-compose up -d --no-deps $SERVICE_NAME
 
-if [ "$SERVICE_NAME" == "api-server" ] || [ "$SERVICE_NAME" == "data-server" ]; then
+# if [ "$SERVICE_NAME" == "api-server" ] || [ "$SERVICE_NAME" == "data-server" ]; then
 
-   echo "Restarting nginx to refresh upstream connections..."
-   sudo docker-compose restart nginx
-fi
+#    echo "Restarting nginx to refresh upstream connections..."
+#    sudo docker-compose restart nginx
+# fi
 
 echo "Running health check for $SERVICE_NAME..."
 sleep 15
