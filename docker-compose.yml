@@ -7,6 +7,8 @@ services:
     ports:
       - "8081:8081"
     restart: unless-stopped
+    networks:
+      - app-network
 
   data-server:
     image: ${IMAGE_NAME:-ghcr.io/stockone19/stock-app:latest}
@@ -16,6 +18,8 @@ services:
     ports:
       - "8000:8000"
     restart: unless-stopped
+    networks:
+      - app-network
 
   nginx:
     image: nginx:alpine
@@ -29,6 +33,8 @@ services:
       - api-server
       - data-server
     restart: unless-stopped
+    networks:
+      - app-network
 
   redis-server:
     image: redis:7-alpine
@@ -36,3 +42,9 @@ services:
     volumes:
       - /tmp/redis:/data
     restart: unless-stopped
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge

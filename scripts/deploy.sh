@@ -16,13 +16,26 @@ if command -v docker &> /dev/null; then
    sudo docker-compose pull $SERVICE_NAME
 fi
 
-echo "Restarting $SERVICE_NAME service..."
-sudo docker rm -f $SERVICE_NAME 2>/dev/null || true
-sudo docker-compose up -d $SERVICE_NAME
+# 1. 기존 컨테이너들 정리
+sudo docker-compose down
 
-echo "Restarting nginx to apply changes..."
-sudo docker rm -f nginx 2>/dev/null || true
-sudo docker-compose up -d --no-deps nginx
+# 2. 새로운 설정으로 전체 시작
+sudo docker-compose up -d
+
+# echo "Restarting $SERVICE_NAME service..."
+# sudo docker-compose stop $SERVICE_NAME
+# sudo docker rm -f $SERVICE_NAME 2>/dev/null || true
+# sudo docker-compose up -d $SERVICE_NAME
+
+# if [ "$SERVICE_NAME" == "api-server" ] || [ "$SERVICE_NAME" == "data-server" ]; then
+#    echo "Waiting for $SERVICE_NAME to be ready..."
+#    sleep 10
+   
+#    echo "Restarting nginx to refresh upstream connections..."
+#    sudo docker-compose stop nginx
+#    sudo docker rm -f nginx 2>/dev/null || true
+#    sudo docker-compose up -d nginx
+# fi
 
 echo "Running health check for $SERVICE_NAME..."
 sleep 15
