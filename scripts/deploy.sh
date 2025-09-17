@@ -11,25 +11,30 @@ if [ -z "$SERVICE_NAME" ]; then
    exit 1
 fi
 
-if command -v docker &> /dev/null; then
-   echo "Pulling latest image for $SERVICE_NAME..."
-   sudo docker-compose pull $SERVICE_NAME
-fi
+sudo docker-compose pull data-server api-server
 
-echo "Restarting $SERVICE_NAME service..."
-sudo docker-compose stop $SERVICE_NAME
-sudo docker rm -f $SERVICE_NAME 2>/dev/null || true
-sudo docker-compose up -d $SERVICE_NAME
+# 새로운 설정으로 전체 시작
+sudo docker-compose up -d
 
-if [ "$SERVICE_NAME" == "api-server" ] || [ "$SERVICE_NAME" == "data-server" ]; then
-   echo "Waiting for $SERVICE_NAME to be ready..."
-   sleep 10
+# if command -v docker &> /dev/null; then
+#    echo "Pulling latest image for $SERVICE_NAME..."
+#    sudo docker-compose pull $SERVICE_NAME
+# fi
+
+# echo "Restarting $SERVICE_NAME service..."
+# sudo docker-compose stop $SERVICE_NAME
+# sudo docker rm -f $SERVICE_NAME 2>/dev/null || true
+# sudo docker-compose up -d $SERVICE_NAME
+
+# if [ "$SERVICE_NAME" == "api-server" ] || [ "$SERVICE_NAME" == "data-server" ]; then
+#    echo "Waiting for $SERVICE_NAME to be ready..."
+#    sleep 10
    
-   echo "Restarting nginx to refresh upstream connections..."
-   sudo docker-compose stop nginx
-   sudo docker rm -f nginx 2>/dev/null || true
-   sudo docker-compose up -d nginx
-fi
+#    echo "Restarting nginx to refresh upstream connections..."
+#    sudo docker-compose stop nginx
+#    sudo docker rm -f nginx 2>/dev/null || true
+#    sudo docker-compose up -d nginx
+# fi
 
 echo "Running health check for $SERVICE_NAME..."
 sleep 15
