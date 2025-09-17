@@ -11,13 +11,16 @@ if [ -z "$SERVICE_NAME" ]; then
    exit 1
 fi
 
+sudo docker rm -f $SERVICE_NAME 2>/dev/null || true
+
 if command -v docker &> /dev/null; then
    echo "Pulling latest image for $SERVICE_NAME..."
    sudo docker-compose pull $SERVICE_NAME
 fi
 
 echo "Restarting $SERVICE_NAME service..."
-sudo docker-compose stop $SERVICE_NAME && docker-compose rm -f $SERVICE_NAME
+sudo docker-compose stop $SERVICE_NAME
+sudo docker-compose rm -f $SERVICE_NAME
 sudo docker-compose up -d $SERVICE_NAME
 
 # if [ "$SERVICE_NAME" == "api-server" ] || [ "$SERVICE_NAME" == "data-server" ]; then
