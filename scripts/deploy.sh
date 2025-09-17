@@ -11,16 +11,18 @@ if [ -z "$SERVICE_NAME" ]; then
    exit 1
 fi
 
-if command -v docker &> /dev/null; then
-   echo "Pulling latest image for $SERVICE_NAME..."
-   sudo docker-compose pull $SERVICE_NAME
-fi
+sudo docker-compose pull data-server api-server
 
 # 1. 기존 컨테이너들 정리
 sudo docker-compose down
 
 # 2. 새로운 설정으로 전체 시작
 sudo docker-compose up -d
+
+# if command -v docker &> /dev/null; then
+#    echo "Pulling latest image for $SERVICE_NAME..."
+#    sudo docker-compose pull $SERVICE_NAME
+# fi
 
 # echo "Restarting $SERVICE_NAME service..."
 # sudo docker-compose stop $SERVICE_NAME
