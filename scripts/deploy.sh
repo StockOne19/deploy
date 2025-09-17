@@ -17,7 +17,7 @@ if command -v docker &> /dev/null; then
 fi
 
 echo "Restarting $SERVICE_NAME service..."
-sudo docker-compose up -d --no-deps api-server data-server
+sudo docker-compose up -d --no-deps $SERVICE_NAME
 
 # if [ "$SERVICE_NAME" == "api-server" ] || [ "$SERVICE_NAME" == "data-server" ]; then
 #    echo "Restarting nginx to apply changes..."
