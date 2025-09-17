@@ -20,10 +20,9 @@ echo "Restarting $SERVICE_NAME service..."
 sudo docker rm -f $SERVICE_NAME 2>/dev/null || true
 sudo docker-compose up -d $SERVICE_NAME
 
-# if [ "$SERVICE_NAME" == "api-server" ] || [ "$SERVICE_NAME" == "data-server" ]; then
-#    echo "Restarting nginx to apply changes..."
-#    sudo docker-compose up -d --no-deps nginx
-# fi
+echo "Restarting nginx to apply changes..."
+sudo docker rm -f nginx 2>/dev/null || true
+sudo docker-compose up -d --no-deps nginx
 
 echo "Running health check for $SERVICE_NAME..."
 sleep 15
