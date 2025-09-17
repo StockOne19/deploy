@@ -13,7 +13,7 @@ fi
 
 if command -v docker &> /dev/null; then
    echo "Pulling latest image for $SERVICE_NAME..."
-   sudo docker-compose pull api-server data-server
+   sudo docker-compose pull $SERVICE_NAME
 fi
 
 echo "Restarting $SERVICE_NAME service..."
