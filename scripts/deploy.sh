@@ -23,7 +23,7 @@ sudo docker-compose up -d --no-deps $SERVICE_NAME
 
 if [ "$SERVICE_NAME" == "api-server" ] || [ "$SERVICE_NAME" == "data-server" ]; then
    echo "Waiting for $SERVICE_NAME to be ready..."
-   sleep 15  # 더 긴 대기시간
+   sleep 15
    
    echo "Restarting nginx to refresh upstream connections..."
    sudo docker-compose restart nginx
