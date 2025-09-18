@@ -12,6 +12,9 @@ if [ -z "$SERVICE_NAME" ]; then
 fi
 
 ### 전체 리셋
+sudo docker stop $(sudo docker ps -aq)
+sudo docker rm $(sudo docker ps -aq)
+
 sudo docker-compose pull api-server data-server
 sudo docker-compose up -d
 ###
